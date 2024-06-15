@@ -5,42 +5,43 @@ import { toast } from 'react-toastify'
 
 const UpdateEvent = () => {
 
-    const[event_name, setEvent_name] = useState('')
-    const[event_description, setEvent_description] = useState('')
-    const[event_date, setEvent_date] = useState('')
-    const[event_location, setEvent_location] = useState('')
-    const navigate = useNavigate()
-    const { id } = useParams()
+  const[event_name, setEvent_name] = useState('')
+  const[event_description, setEvent_description] = useState('')
+  const[event_date, setEvent_date] = useState('')
+  const[event_location, setEvent_location] = useState('')
+  const navigate = useNavigate()
+  const { id } = useParams()
 
-  
-    useEffect(() => {
-      const getEventById = async () => {
-        try {
-          const response = await axios.get(`/events/${id}`)
-          setEvent_name(response.data.event.event_name)
-          setEvent_description(response.data.event.event_description)
-          setEvent_date(response.data.event.event_date)
-          setEvent_location(response.data.event.event_location)
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      getEventById()
-    },[id])
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault()
+
+  useEffect(() => {
+    const getEventById = async () => {
       try {
-        await axios.put(`/events/update/${id}`, 
-          {event_name, event_description, event_date, event_location}
-        )
-        toast.success('Event updated successfully')
-        navigate('/app/home')
+        const response = await axios.get(`/events/${id}`)
+        setEvent_name(response.data.event.event_name)
+        setEvent_description(response.data.event.event_description)
+        setEvent_date(response.data.event.event_date)
+        setEvent_location(response.data.event.event_location)
       } catch (error) {
-        toast.error('Failed to update event')
         console.log(error)
       }
     }
+    getEventById()
+  },[id])
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await axios.put(`/events/update/${id}`, 
+        {event_name, event_description, event_date, event_location}
+      )
+      toast.success('Event updated successfully')
+      navigate('/app/home')
+    } catch (error) {
+      toast.error('Failed to update event')
+      console.log(error)
+    }
+  }
+  
   return (
     <div>
       <div className="container mx-auto p-4">
