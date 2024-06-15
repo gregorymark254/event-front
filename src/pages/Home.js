@@ -2,22 +2,36 @@ import React, { useState, useEffect } from 'react'
 import axios from './api/api'
 import { Link } from 'react-router-dom'
 import { MdEdit, MdDelete } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
+import {toast} from 'react-toastify'
 
 const Home = () => {
 
   const [events,setEvents] = useState([])
 
-  useEffect(() => {
-    const getEvents = async () => {
-      try {
-        const response = await axios.get('/events/')
-        setEvents(response.data.events)
-      } catch (error) {
-        console.log(error)
-      }
+  const getEvents = async () => {
+    try {
+      const response = await axios.get('/events/')
+      setEvents(response.data.events)
+    } catch (error) {
+      console.log(error)
     }
+  }
+
+  useEffect(() => {
     getEvents()
   },[])
+
+  const deleteEvent = async (id) => {
+    try {
+      await axios.delete(`/events/delete/${id}`)
+      toast.success('Event Deleted')
+      getEvents()
+    } catch (error) {
+      console.log(error)
+      toast.error('Failed to delete')
+    }
+  }
 
   return (
     <div>
@@ -48,8 +62,9 @@ const Home = () => {
                 <div>
                   <Link className='bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-500' to={`/app/event/${event.event_id}`}>R.S.V.P</Link>
                   <div className='flex items-center mt-4'>
-                    <Link><span className='text-lg text-green-700'><MdEdit /></span></Link>
-                    <Link><span className='text-lg text-red-700'><MdDelete /></span></Link>
+                    <Link to={`/app/attendace/${event.event_id}`}><span className='text-lg text-blue-700'><FaEye /></span></Link>
+                    <Link to={`/app/eventdetails/${event.event_id}`}><span className='text-lg text-green-700'><MdEdit /></span></Link>
+                    <button onClick={() => deleteEvent(event.event_id)} className='text-lg text-red-700'><MdDelete /></button>
                   </div>
                 </div>
               </div>

@@ -5,6 +5,8 @@ import Nav from './pages/Nav/Nav'
 import Home from './pages/Home'
 import Events from './pages/Events'
 import AddEvent from './pages/AddEvent'
+import Attendance from './pages/Attendance'
+import UpdateEvent from './pages/UpdateEvent'
 
 const Layout = () => {
   const { accessToken, setAccessToken } = AuthToken();
@@ -19,6 +21,8 @@ const Layout = () => {
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/add-event" element={<AddEvent />} />
+        <Route path="/attendace/:id" element={<Attendance />} />
+        <Route path="/eventdetails/:id" element={<UpdateEvent />} />
         <Route path="/event/:id" element={<Events />} />
       </Routes>
     </div>
