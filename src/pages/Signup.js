@@ -17,11 +17,13 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match.');
+      toast('Passwords do not match.');
+      setLoading(false);
       return;
     }
     if (password.length < 8 || confirmPassword.length < 8) {
       toast('Password must be more than 8 characters');
+      setLoading(false)
       return;
     }
     try {
@@ -33,6 +35,7 @@ const Signup = () => {
     } catch (error) {
       toast.error('Registration Error');
       console.log(error.response);
+      setLoading(false)
     } finally {
       setLoading(false);
     }
@@ -110,7 +113,7 @@ const Signup = () => {
                   </label>
                 </div>
                 <div className='text-center py-3'>
-                  <button type='submit' disabled={loading} className='px-6 py-2 bg-green-700 text-white hover:bg-[#422F76] rounded-md w-full'>{loading ? 'Please wait...' : 'Sign Up'}</button>
+                  <button type='submit' disabled={loading} className='px-6 py-2 bg-green-700 text-white hover:bg-green-600 rounded-md w-full disabled:bg-green-700'>{loading ? 'Please wait...' : 'Sign Up'}</button>
                 </div>
                 <div>
                   <span>Already have an account? <u className='text-blue-600 hover:text-blue-800'><Link to='/login'>Sign In Here</Link></u></span>

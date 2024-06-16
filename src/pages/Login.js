@@ -24,8 +24,8 @@ const Login = ({ setAccessToken }) => {
       navigate('/app/home');
       setAccessToken(token);
     } catch (error) {
-      toast.error('Login Error');
-      console.log(error.response);
+      toast.error(error.response.data.error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -73,7 +73,7 @@ const Login = ({ setAccessToken }) => {
                   </label>
                 </div>
                 <div className='text-center py-3'>
-                  <button type='submit' disabled={loading} className='px-6 py-2 bg-green-700 text-white hover:bg-[#422F76] rounded-md w-full'>{loading ? 'Please wait...' : 'Login'}</button>
+                  <button type='submit' disabled={loading} className='px-6 py-2 bg-green-700 text-white hover:bg-green-600 rounded-md w-full disabled:bg-green-700'>{loading ? 'Please wait...' : 'Login'}</button>
                 </div>
                 <div>
                   <span>Don't have an account? <u className='text-blue-600 hover:text-blue-800'><Link to='/signup'>Sign Up</Link></u></span>

@@ -29,6 +29,9 @@ const Nav = () => {
                 <Link to="/app/home" className="nav-links">Home</Link>
               </li>
               <li className="nav-item">
+                <Link to="/app/users" className="nav-links">Users</Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/app/add-event" className="nav-links">Add Event</Link>
               </li>
               <li className="nav-item">
