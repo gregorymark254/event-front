@@ -19,6 +19,7 @@ const UpdateUser = () => {
         setUsername(response.data.username)
         setEmail(response.data.email)
         setRole(response.data.role)
+        console.log(response)
       } catch (error) {
         console.log(error)
       }

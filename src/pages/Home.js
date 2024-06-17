@@ -4,17 +4,33 @@ import { Link } from 'react-router-dom'
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaEye } from "react-icons/fa";
 import {toast} from 'react-toastify'
+import Pagination from '../Pagination'
 
 const Home = () => {
 
   const [events,setEvents] = useState([])
   const [loading,setLoading]= useState(false)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
+  const [searchEvent, setSearchEvent] = useState('')
+  const [total, setTotal] = useState(0);
 
-  const getEvents = async () => {
+  // debounce for search query
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setLoading(true);
+      getEvents((currentPage - 1) * recordsPerPage, recordsPerPage, searchEvent);
+    }, 500);
+    return () => clearTimeout(timerId);
+  }, [currentPage, recordsPerPage, searchEvent]);
+
+
+  const getEvents = async (offset,limit,search) => {
     try {
       setLoading(true)
-      const response = await axios.get('/events/')
+      const response = await axios.get(`/events/?offset=${offset}&limit=${limit}&search=${search}`);
       setEvents(response.data.events)
+      setTotal(response.data.count);
     } catch (error) {
       console.log(error)
       setLoading(false)
@@ -23,9 +39,11 @@ const Home = () => {
     }
   }
 
-  useEffect(() => {
-    getEvents()
-  },[])
+  // Search event
+  const handleSearchChange = (e) => {
+    setSearchEvent(e.target.value);
+    setCurrentPage(1);
+  };
 
   const deleteEvent = async (id) => {
     try {
@@ -50,6 +68,8 @@ const Home = () => {
                 id="search" 
                 placeholder="Search events"
                 className='px-3 py-1 border bg-[#f2f9ff] border-slate-300 placeholder-slate-400 rounded-md focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1'
+                value={searchEvent}
+                onChange={handleSearchChange}
               />
             </label>
           </div>
@@ -82,6 +102,29 @@ const Home = () => {
           ) : ( 
           <p>No events found</p>
         ))}
+        <div className='flex flex-wrap items-center justify-between mt-4'>
+          <div>
+            <span className='mr-2'>Records per page:</span>
+            <select
+              className='px-3 py-1 border bg-[#f2f9ff] border-slate-300 rounded-md focus:outline-none focus:border-[#85d6e3] focus:ring-[#85d6e3]'
+              value={recordsPerPage}
+              onChange={(e) => {
+                setRecordsPerPage(parseInt(e.target.value, 10));
+                setCurrentPage(1);
+              }}
+            >
+              <option value='10'>10</option>
+              <option value='50'>50</option>
+              <option value='75'>75</option>
+              <option value='100'>100</option>
+            </select>
+          </div>
+          <Pagination
+            nPages={Math.ceil(total / recordsPerPage)}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
       </div>
     </div>
   )

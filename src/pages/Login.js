@@ -24,7 +24,11 @@ const Login = ({ setAccessToken }) => {
       navigate('/app/home');
       setAccessToken(token);
     } catch (error) {
-      toast.error(error.response.data.error);
+      if (!error.response) {
+        toast.error('No server response')
+      } else {
+        toast.error(error.response.data.error);
+      }
       console.log(error);
     } finally {
       setLoading(false);
