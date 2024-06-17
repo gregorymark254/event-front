@@ -52,7 +52,7 @@ const Home = () => {
       getEvents()
     } catch (error) {
       console.log(error)
-      toast.error('Failed to delete')
+      toast.error('Failed to delete or event has attendance')
     }
   }
 

@@ -43,7 +43,6 @@ const Attendance = () => {
                   <th className='py-3 px-6'>Last Name</th>
                   <th className='py-3 px-6'>Email</th>
                   <th className='py-3 px-6'>Phone</th>
-                  <th className='py-3 px-6'>Event Name</th>
                 </tr>
               </thead>
               <tbody>
@@ -54,7 +53,6 @@ const Attendance = () => {
                     <td className='py-2 px-6'>{attend.last_name}</td>
                     <td className='py-2 px-6'>{attend.email}</td>
                     <td className='py-2 px-6'>{attend.phone}</td>
-                    <td className='py-2 px-6'>{attend.event_id}</td>
                   </tr>
                 ))}
               </tbody>

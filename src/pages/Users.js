@@ -78,7 +78,7 @@ const Users = () => {
                         <td className='py-2 px-6'>{new Date(user.created_at).toISOString().replace('T', ' ').slice(0, 19)}</td>
                         <td className='py-2 px-6'>
                           <span className="flex items-center space-x-2">
-                            <Link to={`/app/users/${user.id}`} className='text-xl text-green-700'><MdModeEditOutline/></Link>
+                            {/* <Link to={`/app/users/${user.id}`} className='text-xl text-green-700'><MdModeEditOutline/></Link> */}
                             <button onClick={() => deleteUser(user.id)} className='text-xl text-red-700'><MdDelete /></button>
                           </span>
                         </td>
