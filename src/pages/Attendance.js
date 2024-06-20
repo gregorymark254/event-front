@@ -17,8 +17,8 @@ const Attendance = () => {
       try {
         const offset = (currentPage - 1) * recordsPerPage;
         const response = await axios.get(`/attendance/${id}?offset=${offset}&limit=${recordsPerPage}`);
-        setAttendance(response.data.attendance)
-        setTotal(response.data.count)
+        setAttendance(response.data.items)
+        setTotal(response.data.total)
       } catch (error) {
         console.log(error)
       }

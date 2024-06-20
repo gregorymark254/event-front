@@ -6,7 +6,6 @@ import { useParams, useNavigate } from 'react-router-dom'
 const UpdateUser = () => {
 
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
   const{ id } = useParams()
   const navigate = useNavigate()
@@ -17,7 +16,6 @@ const UpdateUser = () => {
       try {
         const response = await axios.get(`/users/${id}`)
         setUsername(response.data.username)
-        setEmail(response.data.email)
         setRole(response.data.role)
         console.log(response)
       } catch (error) {
@@ -32,7 +30,7 @@ const UpdateUser = () => {
     e.preventDefault();
     try {
       await axios.put(`/users/update/${id}`,
-        { username, email, role }
+        { username, role }
       );
       toast.success('User updated');
       navigate('/app/users')
@@ -55,18 +53,6 @@ const UpdateUser = () => {
                 className='mt-4 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-green-700 focus:ring-green-700 block w-full rounded-md sm:text-sm focus:ring-1'
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor='Email'><span className='hidden'>Email</span>
-              <input
-                type='email'
-                required
-                placeholder='Email Address'
-                className='mt-2 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-green-700 focus:ring-green-700 block w-full rounded-md sm:text-sm focus:ring-1'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
               />
             </label>
           </div>

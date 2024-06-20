@@ -29,8 +29,8 @@ const Home = () => {
     try {
       setLoading(true)
       const response = await axios.get(`/events/?offset=${offset}&limit=${limit}&search=${search}`);
-      setEvents(response.data.events)
-      setTotal(response.data.count);
+      setEvents(response.data.items)
+      setTotal(response.data.total);
     } catch (error) {
       console.log(error)
       setLoading(false)
