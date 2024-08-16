@@ -22,7 +22,11 @@ const Events = () => {
       toast.success('Attendance recorded successfully')
       navigate('/app/home')
     } catch (error) {
-      toast.error('Failed to reserve attendance')
+      if(error.response.status === 400){
+        toast.error(error.response.data.error)
+      } else {
+        toast.error('Failed to reserve attendance')
+      }
       console.log(error)
     }
   }

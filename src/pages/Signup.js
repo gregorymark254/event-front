@@ -33,7 +33,11 @@ const Signup = () => {
       toast.success('Registration Successful');
       navigate('/login');
     } catch (error) {
-      toast.error('Registration Error');
+      if(error.response.status === 400){
+        toast.error(error.response.data.error)
+      } else {
+        toast.error('Registration Error');
+      }
       console.log(error.response);
       setLoading(false)
     } finally {
